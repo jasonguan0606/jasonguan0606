@@ -1,0 +1,164 @@
+---
+title: "探索性数据分析"
+author: "Jason"
+date: "2024-12-17"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1. 从流行病到全球大流行
+<p><img style="float: left; margin:5px 20px 5px 1px; width:40%" src="https://www.nps.gov/aboutus/news/images/CDC-coronavirus-image-23311-for-web.jpg?maxwidth=650&autorotate=false"></p>
+<p>2019年12月，中国武汉地区首次发现COVID-19冠状病毒。到2020年3月11日，世界卫生组织（WHO）将COVID-19疫情列为大流行病。在这几个月中，伊朗、韩国和意大利都爆发了重大疫情。</p>
+<p>我们知道，COVID-19 通过呼吸道飞沫传播，如通过咳嗽、打喷嚏或说话。但是，病毒在全球传播的速度有多快？我们是否能看到国家范围内的政策（如关闭和隔离）所产生的任何影响？ </p>
+<p>幸运的是，世界各地的组织一直在收集数据，以便各国政府能够监测和了解这一流行病。值得注意的是，约翰霍普金斯大学系统科学与工程中心创建了一个数据整合系统，从世界卫生组织、美国疾病控制和预防中心（CDC）以及多个国家的卫生部等来源收集数据。<a href="https://github.com/RamiKrispin/coronavirus"></p> <a href="https://github.com/RamiKrispin/coronavirus">
+<p>在本文中，将对 COVID-19 病毒爆发最初几周的数据进行可视化处理，以了解该病毒是在什么时候成为全球大流行病的。</p>
+<p>请注意，有关 COVID-19 的信息和数据经常更新。本项目中使用的数据是 2020 年 3 月 17 日提取的，不应被视为现有的最新数据。</p>
+```{r}
+# 加载readr、ggplot2和dplyr包
+library(readr)
+library(ggplot2)
+library(dplyr)
+
+# 将数据集"datasets/confirmed_cases_worldwide.csv"读入到confirmed_cases_worldwide变量中
+confirmed_cases_worldwide <- read_csv("C:/Users/25560/Desktop/Visualizing COVID-19/datasets/confirmed_cases_worldwide.csv")
+
+# 打印出confirmed_cases_worldwide的内容
+confirmed_cases_worldwide
+```
+
+## 2. 世界各地的确诊病例
+<p>上表显示了按日期分列的全球 COVID-19 累计确诊病例。光看表格中的数字很难了解疫情的规模和增长情况。让我们绘制一张线图来直观地显示全球确诊病例。</p>
+```{r}
+# 绘制累计病例与日期的折线图
+# 标记y轴
+ggplot(confirmed_cases_worldwide, aes(x = date, y = cum_cases)) +
+  geom_line() +                       # 这行添加了折线图层到图表中。
+  ylab("累计确诊病例数")              # 这行设置了y轴的标签为指定的文本。
+```
+
+## 3. 中国与世界其他国家的比较
+<p>图中的 y 轴非常吓人，全球确诊病例总数已接近 20 万例。除此之外，还出现了一些奇怪的现象：二月中旬出现了一个奇怪的跳跃，然后新增病例的速度放缓了一段时间，三月份又加快了。我们需要深入调查，看看到底发生了什么。</p>
+<p>疫情爆发初期，COVID-19 病例主要集中在中国。让我们分别绘制中国和世界其他地区的 COVID-19 确诊病例，看看是否能给我们一些启示。</p>
+<p><em>在未来的任务中，我们将以这幅图为基础。在接下来的任务中，有一点很重要，那就是要在 ggplot 的线条几何图形中添加美观效果，而不是让它们成为全局美观效果。</em></p>
+```{r}
+# 读取数据集
+confirmed_cases_china_vs_world <- read_csv("C:/Users/25560/Desktop/Visualizing COVID-19/datasets/confirmed_cases_china_vs_world.csv")
+
+# 查看数据集的结构和前几行内容
+glimpse(confirmed_cases_china_vs_world)
+
+# 绘制累计病例与日期的折线图，并根据是否为中国来着色
+# 在线条geom中定义美学属性
+plt_cum_confirmed_cases_china_vs_world <- ggplot(confirmed_cases_china_vs_world) +
+  geom_line(aes(x = date, y = cum_cases, color = is_china)) +  # 使用日期作为x轴，累计病例数作为y轴，并根据is_china字段的颜色区分中国与其他地区
+  ylab("累计确诊病例数")  # 设置y轴标签
+
+# 显示图表
+plt_cum_confirmed_cases_china_vs_world
+```
+
+## 4. 注释一下
+<p>两条线的形状截然不同。2 月份，大多数病例发生在中国。到了 3 月份，情况发生了变化，疫情真正成为全球性爆发：3 月 14 日前后，中国境外的病例总数超过了中国境内的病例总数。这是在世界卫生组织宣布疫情大流行几天之后。</p>
+<p>疫情爆发期间还发生了其他一些标志性事件。例如，2020 年 2 月 13 日中国线的大幅跳水并不仅仅是疫情的糟糕一天；中国改变了当天报告数据的方式（接受 CT 扫描作为 COVID-19 的证据，而不仅仅是实验室检测）。</p>
+<p>通过注释这样的事件，我们可以更好地解读情节的变化。</p>
+```{r}
+# 创建一个数据框who_events，记录了重要的WHO事件及其日期
+who_events <- tribble(
+  ~ date,                    ~ event,
+  "2020-01-30",             "全球卫生紧急状态宣布",
+  "2020-03-11",             "大流行宣布",
+  "2020-02-13",             "中国报告方式变更"
+) %>%
+  mutate(date = as.Date(date))  # 将日期列转换为Date类型
+
+# 在之前创建的累计确诊病例数折线图基础上，
+# 添加垂直虚线，x轴截距为who_events中的日期，
+# 并在y轴100000位置添加文本标签，内容为who_events中的事件描述
+plt_cum_confirmed_cases_china_vs_world +
+  geom_vline(aes(xintercept = date), data = who_events, linetype = "dashed") +  # 添加垂直虚线标记关键事件日期
+  geom_text(aes(x = date, y = 1e5, label = event), data = who_events, vjust = -0.5)  # 在每个事件日期上添加文本标签，vjust调整文本的垂直对齐
+```
+
+## 5. 添加趋势线
+<p>在评估未来问题的严重程度时，我们需要衡量案例数量的增长速度。一个很好的起点是看案例的增长速度是快于还是慢于线性增长速度。</p>
+<p>2020 年 2 月 13 日前后，随着中国报告的变化，病例明显激增。然而，几天后，中国的病例增长放缓。如何描述 2020 年 2 月 15 日之后 COVID-19 在中国的增长情况？</p>
+```{r}
+# 筛选出中国从2月15日以后的数据
+china_after_feb15 <- confirmed_cases_china_vs_world %>%
+  filter(is_china == "China", date >= as.Date("2020-02-15"))
+
+# 使用china_after_feb15数据集，绘制累计病例与日期的折线图
+# 添加一条使用线性回归方法计算的平滑趋势线，不显示误差范围
+ggplot(china_after_feb15, aes(x = date, y = cum_cases)) +
+  geom_line() +  # 绘制折线图
+  geom_smooth(method = "lm", se = FALSE) +  # 添加线性回归平滑趋势线，不显示置信区间（误差条）
+  ylab("累计确诊病例数")  # 设置y轴标签为“累计确诊病例数”
+```
+
+## 6. 世界其他地方呢？
+<p>从上图可以看出，中国的增长率低于线性增长率。这是个好消息，因为它表明中国至少在一定程度上遏制了 2 月底和 3 月初的病毒传播。</p>
+<p>与线性增长相比，世界其他国家的情况如何？</p>
+```{r}
+# 筛选出数据集中不属于中国的记录
+not_china <- confirmed_cases_china_vs_world %>%
+  filter(is_china == "Not China")
+
+# 使用not_china数据集，绘制累计病例与日期的折线图
+# 添加一条使用线性回归方法计算的平滑趋势线，不显示误差范围
+plt_not_china_trend_lin <- ggplot(not_china, aes(x = date, y = cum_cases)) +
+  geom_line() +  # 绘制折线图层
+  geom_smooth(method = "lm", se = FALSE) +  # 添加线性回归平滑趋势线，不显示置信区间（误差条）
+  ylab("累计确诊病例数")  # 设置y轴标签为“累计确诊病例数”
+
+# 显示绘图结果
+plt_not_china_trend_lin 
+```
+
+## 7. 添加对数刻度
+<p>从上图中我们可以看出，直线的拟合效果并不好，世界其他地区的增长速度要比直线快得多。如果我们在 y 轴上添加一个对数刻度呢？</p>
+```{r}
+# 在之前创建的图表基础上，修改y轴为对数尺度
+plt_not_china_trend_lin + 
+  scale_y_log10()  # 将y轴设置为以10为底的对数尺度，以便更清晰地展示累计病例数的增长趋势
+```
+
+## 8. 中国以外哪些国家受到的冲击最大？
+<p>使用对数标度，我们可以得到更接近数据的拟合结果。从数据科学的角度来看，拟合良好是个好消息。不幸的是，从公共卫生的角度来看，这意味着世界其他地区的 COVID-19 病例正在以指数速度增长，这是一个可怕的消息。</p>
+<p>并非所有国家都同样受到 COVID-19 的影响，因此了解世界上哪些国家的问题最严重会有所帮助。在数据集中找到确诊病例数最高的国家。</p>
+```{r}
+# 运行此代码以获取每个国家的确诊病例数据
+confirmed_cases_by_country <- read_csv("C:/Users/25560/Desktop/Visualizing COVID-19/datasets/confirmed_cases_by_country.csv")
+glimpse(confirmed_cases_by_country)  # 查看数据集的结构和前几行内容
+
+# 按国家分组，汇总计算总病例数，找出累计病例数最多的前7个国家
+top_countries_by_total_cases <- confirmed_cases_by_country %>%
+  group_by(country) %>%  # 按国家分组
+  summarize(total_cases = max(cum_cases)) %>%  # 计算每个国家的最大累计病例数作为总病例数
+  top_n(7, total_cases)  # 找出总病例数最多的前7个国家
+
+# 显示结果
+top_countries_by_total_cases
+```
+
+## 9. 截至 2020 年 3 月中旬受影响最严重的国家分布图
+<p>尽管疫情首先在中国发现，但上表中只有一个东亚国家（韩国）。所列国家中有四个（法国、德国、意大利和西班牙）位于欧洲，并且与欧洲接壤。为了获得更多信息，我们可以绘制这些国家的确诊病例随时间变化的曲线。
+<p>如果您想继续制作可视化图表或查找截至目前受影响最严重的国家，可以使用现有的最新数据进行分析 <a href="https://github.com/RamiKrispin/coronavirus">here</a>. </p>
+```{r}
+# confirmed_cases_top7_outside_china.csv读取数据集
+confirmed_cases_top7_outside_china <- read_csv("C:/Users/25560/Desktop/Visualizing COVID-19/datasets/confirmed_cases_top7_outside_china.csv")
+
+# 查看confirmed_cases_top7_outside_china数据集的内容
+glimpse(confirmed_cases_top7_outside_china)
+
+# 使用confirmed_cases_top7_outside_china数据集，绘制累计病例与日期的折线图，并根据国家着色
+ggplot(confirmed_cases_top7_outside_china, aes(date, cum_cases, color = country)) +
+  geom_line() +
+  ylab("累计确诊病例数")
+```
+
+

@@ -1,0 +1,525 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Untitled},
+  pdfauthor={Jason},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Untitled}
+\author{Jason}
+\date{2024-12-17}
+
+\begin{document}
+\maketitle
+
+\subsection{1.
+从流行病到全球大流行}\label{ux4eceux6d41ux884cux75c5ux5230ux5168ux7403ux5927ux6d41ux884c}
+
+2019年12月，中国武汉地区首次发现COVID-19冠状病毒。到2020年3月11日，世界卫生组织（WHO）将COVID-19疫情列为大流行病。在这几个月中，伊朗、韩国和意大利都爆发了重大疫情。
+
+我们知道，COVID-19
+通过呼吸道飞沫传播，如通过咳嗽、打喷嚏或说话。但是，病毒在全球传播的速度有多快？我们是否能看到国家范围内的政策（如关闭和隔离）所产生的任何影响？
+
+幸运的是，世界各地的组织一直在收集数据，以便各国政府能够监测和了解这一流行病。值得注意的是，约翰霍普金斯大学系统科学与工程中心创建了一个数据整合系统，从世界卫生组织、美国疾病控制和预防中心（CDC）以及多个国家的卫生部等来源收集数据。
+
+在本文中，将对 COVID-19
+病毒爆发最初几周的数据进行可视化处理，以了解该病毒是在什么时候成为全球大流行病的。
+
+请注意，有关 COVID-19 的信息和数据经常更新。本项目中使用的数据是 2020 年
+3 月 17 日提取的，不应被视为现有的最新数据。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 加载readr、ggplot2和dplyr包}
+\FunctionTok{library}\NormalTok{(readr)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: 程序包'dplyr'是用R版本4.4.2 来建造的
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## 载入程序包：'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 将数据集"datasets/confirmed\_cases\_worldwide.csv"读入到confirmed\_cases\_worldwide变量中}
+\NormalTok{confirmed\_cases\_worldwide }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"C:/Users/25560/Desktop/Visualizing COVID{-}19/datasets/confirmed\_cases\_worldwide.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 56 Columns: 2
+\end{verbatim}
+
+\begin{verbatim}
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## dbl  (1): cum_cases
+## date (1): date
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 打印出confirmed\_cases\_worldwide的内容}
+\NormalTok{confirmed\_cases\_worldwide}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 56 x 2
+##    date       cum_cases
+##    <date>         <dbl>
+##  1 2020-01-22       555
+##  2 2020-01-23       653
+##  3 2020-01-24       941
+##  4 2020-01-25      1434
+##  5 2020-01-26      2118
+##  6 2020-01-27      2927
+##  7 2020-01-28      5578
+##  8 2020-01-29      6166
+##  9 2020-01-30      8234
+## 10 2020-01-31      9927
+## # i 46 more rows
+\end{verbatim}
+
+\subsection{2.
+世界各地的确诊病例}\label{ux4e16ux754cux5404ux5730ux7684ux786eux8bcaux75c5ux4f8b}
+
+上表显示了按日期分列的全球 COVID-19
+累计确诊病例。光看表格中的数字很难了解疫情的规模和增长情况。让我们绘制一张线图来直观地显示全球确诊病例。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 绘制累计病例与日期的折线图}
+\CommentTok{\# 标记y轴}
+\FunctionTok{ggplot}\NormalTok{(confirmed\_cases\_worldwide, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ date, }\AttributeTok{y =}\NormalTok{ cum\_cases)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}                       \CommentTok{\# 这行添加了折线图层到图表中。}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"累计确诊病例数"}\NormalTok{)              }\CommentTok{\# 这行设置了y轴的标签为指定的文本。}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{探索性数据分析-管培哲-24349134_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+\subsection{3.
+中国与世界其他国家的比较}\label{ux4e2dux56fdux4e0eux4e16ux754cux5176ux4ed6ux56fdux5bb6ux7684ux6bd4ux8f83}
+
+图中的 y 轴非常吓人，全球确诊病例总数已接近 20
+万例。除此之外，还出现了一些奇怪的现象：二月中旬出现了一个奇怪的跳跃，然后新增病例的速度放缓了一段时间，三月份又加快了。我们需要深入调查，看看到底发生了什么。
+
+疫情爆发初期，COVID-19
+病例主要集中在中国。让我们分别绘制中国和世界其他地区的 COVID-19
+确诊病例，看看是否能给我们一些启示。
+
+在未来的任务中，我们将以这幅图为基础。在接下来的任务中，有一点很重要，那就是要在
+ggplot 的线条几何图形中添加美观效果，而不是让它们成为全局美观效果。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 读取数据集}
+\NormalTok{confirmed\_cases\_china\_vs\_world }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"C:/Users/25560/Desktop/Visualizing COVID{-}19/datasets/confirmed\_cases\_china\_vs\_world.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 112 Columns: 4
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr  (1): is_china
+## dbl  (2): cases, cum_cases
+## date (1): date
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 查看数据集的结构和前几行内容}
+\FunctionTok{glimpse}\NormalTok{(confirmed\_cases\_china\_vs\_world)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 112
+## Columns: 4
+## $ is_china  <chr> "China", "China", "China", "China", "China", "China", "China~
+## $ date      <date> 2020-01-22, 2020-01-23, 2020-01-24, 2020-01-25, 2020-01-26,~
+## $ cases     <dbl> 548, 95, 277, 486, 669, 802, 2632, 578, 2054, 1661, 2089, 47~
+## $ cum_cases <dbl> 548, 643, 920, 1406, 2075, 2877, 5509, 6087, 8141, 9802, 118~
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 绘制累计病例与日期的折线图，并根据是否为中国来着色}
+\CommentTok{\# 在线条geom中定义美学属性}
+\NormalTok{plt\_cum\_confirmed\_cases\_china\_vs\_world }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(confirmed\_cases\_china\_vs\_world) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ date, }\AttributeTok{y =}\NormalTok{ cum\_cases, }\AttributeTok{color =}\NormalTok{ is\_china)) }\SpecialCharTok{+}  \CommentTok{\# 使用日期作为x轴，累计病例数作为y轴，并根据is\_china字段的颜色区分中国与其他地区}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"累计确诊病例数"}\NormalTok{)  }\CommentTok{\# 设置y轴标签}
+
+\CommentTok{\# 显示图表}
+\NormalTok{plt\_cum\_confirmed\_cases\_china\_vs\_world}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{探索性数据分析-管培哲-24349134_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\subsection{4. 注释一下}\label{ux6ce8ux91caux4e00ux4e0b}
+
+两条线的形状截然不同。2 月份，大多数病例发生在中国。到了 3
+月份，情况发生了变化，疫情真正成为全球性爆发：3 月 14
+日前后，中国境外的病例总数超过了中国境内的病例总数。这是在世界卫生组织宣布疫情大流行几天之后。
+
+疫情爆发期间还发生了其他一些标志性事件。例如，2020 年 2 月 13
+日中国线的大幅跳水并不仅仅是疫情的糟糕一天；中国改变了当天报告数据的方式（接受
+CT 扫描作为 COVID-19 的证据，而不仅仅是实验室检测）。
+
+通过注释这样的事件，我们可以更好地解读情节的变化。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 创建一个数据框who\_events，记录了重要的WHO事件及其日期}
+\NormalTok{who\_events }\OtherTok{\textless{}{-}} \FunctionTok{tribble}\NormalTok{(}
+  \SpecialCharTok{\textasciitilde{}}\NormalTok{ date,                    }\SpecialCharTok{\textasciitilde{}}\NormalTok{ event,}
+  \StringTok{"2020{-}01{-}30"}\NormalTok{,             }\StringTok{"全球卫生紧急状态宣布"}\NormalTok{,}
+  \StringTok{"2020{-}03{-}11"}\NormalTok{,             }\StringTok{"大流行宣布"}\NormalTok{,}
+  \StringTok{"2020{-}02{-}13"}\NormalTok{,             }\StringTok{"中国报告方式变更"}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{date =} \FunctionTok{as.Date}\NormalTok{(date))  }\CommentTok{\# 将日期列转换为Date类型}
+
+\CommentTok{\# 在之前创建的累计确诊病例数折线图基础上，}
+\CommentTok{\# 添加垂直虚线，x轴截距为who\_events中的日期，}
+\CommentTok{\# 并在y轴100000位置添加文本标签，内容为who\_events中的事件描述}
+\NormalTok{plt\_cum\_confirmed\_cases\_china\_vs\_world }\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept =}\NormalTok{ date), }\AttributeTok{data =}\NormalTok{ who\_events, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }\SpecialCharTok{+}  \CommentTok{\# 添加垂直虚线标记关键事件日期}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ date, }\AttributeTok{y =} \FloatTok{1e5}\NormalTok{, }\AttributeTok{label =}\NormalTok{ event), }\AttributeTok{data =}\NormalTok{ who\_events, }\AttributeTok{vjust =} \SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{)  }\CommentTok{\# 在每个事件日期上添加文本标签，vjust调整文本的垂直对齐}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{探索性数据分析-管培哲-24349134_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\subsection{5. 添加趋势线}\label{ux6dfbux52a0ux8d8bux52bfux7ebf}
+
+在评估未来问题的严重程度时，我们需要衡量案例数量的增长速度。一个很好的起点是看案例的增长速度是快于还是慢于线性增长速度。
+
+2020 年 2 月 13
+日前后，随着中国报告的变化，病例明显激增。然而，几天后，中国的病例增长放缓。如何描述
+2020 年 2 月 15 日之后 COVID-19 在中国的增长情况？
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 筛选出中国从2月15日以后的数据}
+\NormalTok{china\_after\_feb15 }\OtherTok{\textless{}{-}}\NormalTok{ confirmed\_cases\_china\_vs\_world }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(is\_china }\SpecialCharTok{==} \StringTok{"China"}\NormalTok{, date }\SpecialCharTok{\textgreater{}=} \FunctionTok{as.Date}\NormalTok{(}\StringTok{"2020{-}02{-}15"}\NormalTok{))}
+
+\CommentTok{\# 使用china\_after\_feb15数据集，绘制累计病例与日期的折线图}
+\CommentTok{\# 添加一条使用线性回归方法计算的平滑趋势线，不显示误差范围}
+\FunctionTok{ggplot}\NormalTok{(china\_after\_feb15, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ date, }\AttributeTok{y =}\NormalTok{ cum\_cases)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}  \CommentTok{\# 绘制折线图}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}  \CommentTok{\# 添加线性回归平滑趋势线，不显示置信区间（误差条）}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"累计确诊病例数"}\NormalTok{)  }\CommentTok{\# 设置y轴标签为“累计确诊病例数”}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{探索性数据分析-管培哲-24349134_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\subsection{6.
+世界其他地方呢？}\label{ux4e16ux754cux5176ux4ed6ux5730ux65b9ux5462}
+
+从上图可以看出，中国的增长率低于线性增长率。这是个好消息，因为它表明中国至少在一定程度上遏制了
+2 月底和 3 月初的病毒传播。
+
+与线性增长相比，世界其他国家的情况如何？
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 筛选出数据集中不属于中国的记录}
+\NormalTok{not\_china }\OtherTok{\textless{}{-}}\NormalTok{ confirmed\_cases\_china\_vs\_world }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(is\_china }\SpecialCharTok{==} \StringTok{"Not China"}\NormalTok{)}
+
+\CommentTok{\# 使用not\_china数据集，绘制累计病例与日期的折线图}
+\CommentTok{\# 添加一条使用线性回归方法计算的平滑趋势线，不显示误差范围}
+\NormalTok{plt\_not\_china\_trend\_lin }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(not\_china, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ date, }\AttributeTok{y =}\NormalTok{ cum\_cases)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}  \CommentTok{\# 绘制折线图层}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}  \CommentTok{\# 添加线性回归平滑趋势线，不显示置信区间（误差条）}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"累计确诊病例数"}\NormalTok{)  }\CommentTok{\# 设置y轴标签为“累计确诊病例数”}
+
+\CommentTok{\# 显示绘图结果}
+\NormalTok{plt\_not\_china\_trend\_lin }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{探索性数据分析-管培哲-24349134_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\subsection{7. 添加对数刻度}\label{ux6dfbux52a0ux5bf9ux6570ux523bux5ea6}
+
+从上图中我们可以看出，直线的拟合效果并不好，世界其他地区的增长速度要比直线快得多。如果我们在
+y 轴上添加一个对数刻度呢？
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 在之前创建的图表基础上，修改y轴为对数尺度}
+\NormalTok{plt\_not\_china\_trend\_lin }\SpecialCharTok{+} 
+  \FunctionTok{scale\_y\_log10}\NormalTok{()  }\CommentTok{\# 将y轴设置为以10为底的对数尺度，以便更清晰地展示累计病例数的增长趋势}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{探索性数据分析-管培哲-24349134_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\subsection{8.
+中国以外哪些国家受到的冲击最大？}\label{ux4e2dux56fdux4ee5ux5916ux54eaux4e9bux56fdux5bb6ux53d7ux5230ux7684ux51b2ux51fbux6700ux5927}
+
+使用对数标度，我们可以得到更接近数据的拟合结果。从数据科学的角度来看，拟合良好是个好消息。不幸的是，从公共卫生的角度来看，这意味着世界其他地区的
+COVID-19 病例正在以指数速度增长，这是一个可怕的消息。
+
+并非所有国家都同样受到 COVID-19
+的影响，因此了解世界上哪些国家的问题最严重会有所帮助。在数据集中找到确诊病例数最高的国家。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 运行此代码以获取每个国家的确诊病例数据}
+\NormalTok{confirmed\_cases\_by\_country }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"C:/Users/25560/Desktop/Visualizing COVID{-}19/datasets/confirmed\_cases\_by\_country.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 13272 Columns: 5
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr  (2): country, province
+## dbl  (2): cases, cum_cases
+## date (1): date
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{glimpse}\NormalTok{(confirmed\_cases\_by\_country)  }\CommentTok{\# 查看数据集的结构和前几行内容}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 13,272
+## Columns: 5
+## $ country   <chr> "Afghanistan", "Albania", "Algeria", "Andorra", "Antigua and~
+## $ province  <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
+## $ date      <date> 2020-01-22, 2020-01-22, 2020-01-22, 2020-01-22, 2020-01-22,~
+## $ cases     <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+## $ cum_cases <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 按国家分组，汇总计算总病例数，找出累计病例数最多的前7个国家}
+\NormalTok{top\_countries\_by\_total\_cases }\OtherTok{\textless{}{-}}\NormalTok{ confirmed\_cases\_by\_country }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(country) }\SpecialCharTok{\%\textgreater{}\%}  \CommentTok{\# 按国家分组}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{total\_cases =} \FunctionTok{max}\NormalTok{(cum\_cases)) }\SpecialCharTok{\%\textgreater{}\%}  \CommentTok{\# 计算每个国家的最大累计病例数作为总病例数}
+  \FunctionTok{top\_n}\NormalTok{(}\DecValTok{7}\NormalTok{, total\_cases)  }\CommentTok{\# 找出总病例数最多的前7个国家}
+
+\CommentTok{\# 显示结果}
+\NormalTok{top\_countries\_by\_total\_cases}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 7 x 2
+##   country      total_cases
+##   <chr>              <dbl>
+## 1 France              7699
+## 2 Germany             9257
+## 3 Iran               16169
+## 4 Italy              31506
+## 5 Korea, South        8320
+## 6 Spain              11748
+## 7 US                  6421
+\end{verbatim}
+
+\subsection{9. 截至 2020 年 3
+月中旬受影响最严重的国家分布图}\label{ux622aux81f3-2020-ux5e74-3-ux6708ux4e2dux65ecux53d7ux5f71ux54cdux6700ux4e25ux91cdux7684ux56fdux5bb6ux5206ux5e03ux56fe}
+
+尽管疫情首先在中国发现，但上表中只有一个东亚国家（韩国）。所列国家中有四个（法国、德国、意大利和西班牙）位于欧洲，并且与欧洲接壤。为了获得更多信息，我们可以绘制这些国家的确诊病例随时间变化的曲线。
+
+如果您想继续制作可视化图表或查找截至目前受影响最严重的国家，可以使用现有的最新数据进行分析
+here.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# confirmed\_cases\_top7\_outside\_china.csv读取数据集}
+\NormalTok{confirmed\_cases\_top7\_outside\_china }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"C:/Users/25560/Desktop/Visualizing COVID{-}19/datasets/confirmed\_cases\_top7\_outside\_china.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 2030 Columns: 3
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr  (1): country
+## dbl  (1): cum_cases
+## date (1): date
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 查看confirmed\_cases\_top7\_outside\_china数据集的内容}
+\FunctionTok{glimpse}\NormalTok{(confirmed\_cases\_top7\_outside\_china)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 2,030
+## Columns: 3
+## $ country   <chr> "Germany", "Iran", "Italy", "Korea, South", "Spain", "US", "~
+## $ date      <date> 2020-02-18, 2020-02-18, 2020-02-18, 2020-02-18, 2020-02-18,~
+## $ cum_cases <dbl> 16, 0, 3, 31, 2, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13,~
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 使用confirmed\_cases\_top7\_outside\_china数据集，绘制累计病例与日期的折线图，并根据国家着色}
+\FunctionTok{ggplot}\NormalTok{(confirmed\_cases\_top7\_outside\_china, }\FunctionTok{aes}\NormalTok{(date, cum\_cases, }\AttributeTok{color =}\NormalTok{ country)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"累计确诊病例数"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{探索性数据分析-管培哲-24349134_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\end{document}
