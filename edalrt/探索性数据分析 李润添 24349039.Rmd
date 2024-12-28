@@ -1,0 +1,106 @@
+---
+title: "探索性数据分析 李润添 24349039"
+author: "liruntian"
+date: "2024-12-16"
+output: html_document
+---
+#对所需用到的包进行加载
+```{r}
+install.packages("dplyr")
+install.packages("ggplot2")
+install.packages("tidyr")
+install.packages("lubridate")
+install.packages("readr")
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(lubridate)
+library(readr)
+```
+
+#下载并读取数据
+```{r}
+local_path <- "/Users/liruntian/Desktop/统计模型作业/Online Retail.xlsx"  
+# 读取Excel文件
+online_retail <- read_excel(local_path, sheet = 1)
+# 查看前几行数据以确认格式正确
+head(online_retail)
+```
+
+#检查数据质量
+```{r}
+# 查看所有列名
+colnames(online_retail)
+# 获取数据的基本信息
+str(online_retail)
+# 检查是否有缺失值
+sum(is.na(online_retail))
+# 查看各变量的摘要统计信息
+summary(online_retail)
+```
+
+#进行数据清洗
+```{r}
+# 删除含有缺失值的行
+online_retail_clean <- na.omit(online_retail)
+# 确保 'InvoiceDate' 是日期时间格式
+online_retail_clean$InvoiceDate <- lubridate::ymd_hms(online_retail_clean$InvoiceDate)
+# 确保 'CustomerID' 是数值型
+online_retail_clean$CustomerID <- as.numeric(as.character(online_retail_clean$CustomerID))
+# 检查是否有负数量或价格为零的情况，并清理
+library(dplyr)
+online_retail_clean <- online_retail_clean %>%
+  filter(Quantity > 0, UnitPrice > 0)
+# 再次检查数据结构
+str(online_retail_clean)
+```
+
+#进行描述性统计分析
+```{r}
+# 数值型变量的统计量
+desc_stats <- online_retail_clean %>%
+  summarise(across(where(is.numeric), list(mean = mean, median = median, sd = sd)))
+print(desc_stats)
+# 分类变量（如国家）的频率分布
+table(online_retail_clean$Country)
+```
+
+#进行数据可视化
+##单变量分析
+```{r}
+# 绘制订单数量的直方图
+library(ggplot2)
+ggplot(online_retail_clean, aes(x = Quantity)) +
+  geom_histogram(binwidth = 10, fill = "blue", color = "black") +
+  labs(title = "Distribution of Order Quantities", x = "Quantity", y = "Frequency")
+# 箱线图展示不同国家的单位价格分布
+ggplot(online_retail_clean, aes(x = Country, y = UnitPrice)) +
+  geom_boxplot() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  labs(title = "Boxplot of Unit Price by Country", x = "Country", y = "Unit Price")
+```
+##双变量分析
+```{r}
+# 散点图矩阵（Pairwise Scatter Plots），选择一些感兴趣的变量
+pairs(~ Quantity + UnitPrice + CustomerID,
+      data = online_retail_clean, main = "Scatterplot Matrix of Selected Variables")
+# 使用ggplot2绘制散点图，查看订单数量与单位价格的关系
+ggplot(online_retail_clean, aes(x = Quantity, y = UnitPrice)) +
+  geom_point(alpha = 0.6) +
+  labs(title = "Relationship between Quantity and Unit Price", x = "Quantity", y = "Unit Price")
+```
+##时间序列分析
+```{r}
+library(lubridate)
+online_retail_clean %>%
+  group_by(Date = floor_date(InvoiceDate, "month")) %>%
+  summarise(TotalSales = sum(UnitPrice * Quantity)) %>%
+  ggplot(aes(x = Date, y = TotalSales)) +
+  geom_line() +
+  labs(title = "Monthly Sales Trend", x = "Date", y = "Total Sales")
+```
+经过初步分析，我们可以进行初步的假设：
+（1）订单数量分布：从直方图可以看出大多数订单的数量集中在较低范围内。
+（2）不同国家的价格差异：箱线图显示不同国家之间的单位价格存在显著差异。
+（3）订单数量与单位价格的关系：散点图表明两者之间可能存在某种关系，但需要进一步验证。
+（4）销售趋势：时间序列图揭示了销售额随时间的变化趋势，有助于识别季节性和长期趋势。
